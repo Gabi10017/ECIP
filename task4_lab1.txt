@@ -1,0 +1,25 @@
+What is the difference between true state and observation?
+
+The true state is the actual, underlying reality of the system at a given time. In your first task, your true state is a perfect, predictable process where the value simply increases by one at each time step. It forms a perfectly straight line.
+
+An observation is what you actually measure or record in the real world. Real sensors are never perfect; they are affected by random interference. In your second task, the observation is modeled as the true state plus random noise. Because of the noise, your observations are scattered randomly around the true state line.
+
+How does estimation reduce noise?
+
+Estimation algorithms try to guess the true state using only the noisy observations. In your third task, you are using a Simple Moving Average estimator.
+
+It reduces noise through the mathematical property of averaging. The noise in your code is generated to be centered around zero. When you calculate the moving average over a window of past observations, the positive noise errors and the negative noise errors tend to cancel each other out. As you average these points together, the random fluctuations shrink, resulting in an estimated state that is much smoother and closer to the true state than any individual noisy observation.
+
+How does changing the noise level affect estimation?
+
+Changing the noise level affects the estimation significantly. In your code, the noise level is determined by the scale parameter.
+
+With a higher noise level, the observations will scatter much further away from the true state. Consequently, your moving average estimate will also fluctuate more heavily because the individual errors it is trying to average out are much larger, making the estimate less accurate. Conversely, with a lower noise level, the observations will group tightly around the true state. The moving average will easily smooth out these small bumps, resulting in an estimate that tracks the true state very closely.
+
+How does the window size effect the result?
+
+The window size controls a fundamental trade off in estimation known as the bias variance tradeoff. In your third task, you set the window size to five.
+
+A larger window averages more data points. This is fantastic for reducing random noise, resulting in a very smooth line. However, because your true state is constantly increasing over time, averaging old values will cause your estimate to mathematically lag behind the true current state. You will consistently underestimate the true value.
+
+On the other hand, a smaller window only looks at the most recent data. This means it will react very quickly to the upward trend and have very little lag. But because it is only averaging a couple of points, it cannot effectively cancel out the noise. The resulting line will be very jagged and sensitive to random spikes.
